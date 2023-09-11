@@ -18,8 +18,7 @@ defmodule UasWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    get "/hello", HelloController, :index
-    get "/hello/:messenger", HelloController, :show
+    get "/login", LoginController, :login
   end
 
   # Other scopes may use custom stacks.
