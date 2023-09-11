@@ -1,6 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" class="[scrollbar-gutter:stable]">
   <head>
+    <style>
+
+      .header {
+        background-color: #333; 
+        padding: 10px;
+        display: flex; 
+        justify-content: flex-end;
+        align-items: center;
+      }
+
+      .Email {
+        color: white;          
+        text-decoration: none;  
+        padding: 5px 10px;  
+        font-weight: 500;
+        margin-right: 20px;
+      }
+
+      .Register, .Settings {
+        color: black;          
+        background-color: lightgrey; 
+        text-decoration: none;  
+        padding: 5px 10px;  
+        font-weight: 500;
+        margin-right: 20px;
+      }
+      .Login, .Logout{
+        color: black;
+        background-color: lightgreen;
+        padding: 5px 10px;  
+        font-weight: 500;
+      }
+
+    </style>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
@@ -11,7 +46,49 @@
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
   </head>
-  <body class="bg-white antialiased">
+  <body>
+    <div class = "header">
+        <%= if @current_user do %>
+          <a class="Email">
+            <%= @current_user.email %>
+          </a>
+          <a>
+            <.link
+              href={~p"/users/settings"}
+              class = "Settings"
+            >
+              Settings
+            </.link>
+          </a>
+          <a>
+            <.link
+              href={~p"/users/log_out"}
+              class = "Logout"
+              method="delete"
+            >
+              Log out
+            </.link>
+          </a>
+        <% else %>
+          <a>
+            <.link
+              href={~p"/users/register"}
+              class="Register"
+            >
+              Register
+            </.link>
+          </a>
+          <a>
+            <.link
+              href={~p"/users/log_in"}
+              class="Login"
+            >
+              Log in
+            </.link>
+          </a>
+        <% end %>
+    </div>
+
     <%= @inner_content %>
   </body>
 </html>
