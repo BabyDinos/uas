@@ -22,15 +22,11 @@
 </head>
 
 <body>
-    <%= if @current_user do %>
-      <h1 class="page-title">This is <%= @current_user.username %>'s profile!</h1>
-    <% else %>
-      <%= if @username_in_database do %>
-        <h1 class="page-title">This is <%= @username_in_database %>'s profile!</h1>
-      <% else %>
-        <div class="error-message">User not found!</div>
-      <% end %>
-    <% end %>
-  </body>
+  <%= if @username_in_database do %>
+    <h1 class="page-title">This is <%= @username_in_database %>'s profile!</h1>
+  <% else %>
+    <h1 class="page-title">ERROR: <%= @username %> not found!</h1>
+  <% end %>
+</body>
 
 </html>

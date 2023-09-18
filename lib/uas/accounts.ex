@@ -105,7 +105,7 @@ defmodule Uas.Accounts do
 
   """
   def change_user_email(user, attrs \\ %{}) do
-    User.email_changeset(user, attrs, validate_email: false)
+    User.email_changeset(user, attrs, validate_email: true)
   end
 
   @doc """
@@ -357,6 +357,10 @@ defmodule Uas.Accounts do
     else
       nil
     end
+  end
+
+  def change_username(user, attrs \\ %{}) do
+    User.username_changeset(user, attrs, validate_email: true)
   end
 
 end

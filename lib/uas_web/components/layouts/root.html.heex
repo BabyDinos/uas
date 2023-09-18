@@ -49,9 +49,15 @@
   <body>
     <div class = "header">
         <%= if @current_user do %>
-          <a class="Username">
+          <a>
+            <.link
+            href = {~p"/profiles/#{@current_user.username}"}
+            class = "Username"
+            >
             <%= @current_user.username %>
+            </.link>
           </a>
+            
           <a>
             <.link
               href={~p"/users/settings"}

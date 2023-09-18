@@ -139,6 +139,15 @@ defmodule Uas.Accounts.User do
     |> validate_password(opts)
   end
 
+  def username_changeset(user, attrs, opts \\ []) do
+    user
+    |> cast(attrs, [:username])
+    |> validate_username(opts)
+    |> case do
+      %{changes: %{username: _}} = changeset -> changeset
+      %{} = changeset -> add_error(changeset, :username, "did not change")
+    end
+  end
   @doc """
   Confirms the account by setting `confirmed_at`.
   """
