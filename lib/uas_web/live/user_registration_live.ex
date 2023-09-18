@@ -6,6 +6,41 @@ defmodule UasWeb.UserRegistrationLive do
 
   def render(assigns) do
     ~H"""
+    <style>
+    input[type="username"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 5px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+      height: auto;
+      margin: 0 auto;
+      padding: 10px;
+    }
+
+      /* Style for the submit button */
+    form button {
+      margin-top: 5px; /* Add spacing between the last form field and the button */
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+      /* Optional: Style for form labels */
+    form label {
+      margin-top: 5px;
+      margin-bottom: 5px; /* Add spacing between labels and form fields */
+    }
+    </style>
     <div class="mx-auto max-w-sm">
       <.header class="text-center">
         Register for an account
@@ -31,6 +66,7 @@ defmodule UasWeb.UserRegistrationLive do
           Oops, something went wrong! Please check the errors below.
         </.error>
 
+        <.input field={@form[:username]} type ="username" label="Username" required/>
         <.input field={@form[:email]} type="email" label="Email" required />
         <.input field={@form[:password]} type="password" label="Password" required />
 

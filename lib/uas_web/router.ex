@@ -23,6 +23,12 @@ defmodule UasWeb.Router do
     get "/", PageController, :home
   end
 
+  scope "/profiles", UasWeb do
+    pipe_through :browser
+
+    get "/:username", ProfileController, :profile
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", UasWeb do
   #   pipe_through :api

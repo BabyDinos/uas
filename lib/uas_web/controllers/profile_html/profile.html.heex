@@ -1,0 +1,36 @@
+<.flash_group flash={@flash} />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+    body {
+        /* background-image: url("/images/snorlax.jpg"); */
+        background-size: cover; 
+        background-position: center center; 
+        background-repeat: no-repeat;
+    }
+    h1.page-title {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: black;
+        font-size: xx-large;
+        text-align: center;
+    }
+    </style>
+</head>
+
+<body>
+    <%= if @current_user do %>
+      <h1 class="page-title">This is <%= @current_user.username %>'s profile!</h1>
+    <% else %>
+      <%= if @username_in_database do %>
+        <h1 class="page-title">This is <%= @username_in_database %>'s profile!</h1>
+      <% else %>
+        <div class="error-message">User not found!</div>
+      <% end %>
+    <% end %>
+  </body>
+
+</html>

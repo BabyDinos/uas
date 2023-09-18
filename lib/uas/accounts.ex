@@ -90,7 +90,7 @@ defmodule Uas.Accounts do
 
   """
   def change_user_registration(%User{} = user, attrs \\ %{}) do
-    User.registration_changeset(user, attrs, hash_password: false, validate_email: false)
+    User.registration_changeset(user, attrs, hash_password: true, validate_email: true, validate_username: true)
   end
 
   ## Settings
@@ -350,4 +350,13 @@ defmodule Uas.Accounts do
       {:error, :user, changeset, _} -> {:error, changeset}
     end
   end
+
+  def username_exists(username) do
+    if user = Repo.get_by(User, username: username) do
+      user.username
+    else
+      nil
+    end
+  end
+
 end
