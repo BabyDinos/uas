@@ -66,7 +66,7 @@ defmodule Uas.Accounts.User do
     changeset
     |> validate_required([:username])
     |> validate_length(:username, min: 1, max: 20)
-    |> validate_format(:username, ~r/[A-Za-z0-9_]+/, message: "must not contain special characters")
+    |> validate_format(:username, ~r/^[A-Za-z0-9_]*$/, message: "must not contain special characters")
     |> maybe_validate_unique_username(opts)
   end
 

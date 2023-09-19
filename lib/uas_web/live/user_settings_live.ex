@@ -27,14 +27,14 @@ defmodule UasWeb.UserSettingsLive do
           phx-submit="update_username"
           phx-change="validate_username"
         >
-          <.input field={@email_form[:email]} type="username" label="Username" required />
+          <.input field={@username_form[:username]} type="username" label="Username" required />
           <.input
             field={@username_form[:current_password]}
             name="current_password"
-            id="current_password_for_email"
+            id="current_password_for_username"
             type="password"
             label="Current password"
-            value={@email_form_current_password}
+            value={@current_password_username}
             required
           />
           <:actions>
@@ -92,7 +92,7 @@ defmodule UasWeb.UserSettingsLive do
             type="password"
             label="Current password"
             id="current_password_for_password"
-            value={@current_password}
+            value={@current_password_password}
             required
           />
           <:actions>
@@ -125,7 +125,8 @@ defmodule UasWeb.UserSettingsLive do
 
     socket =
       socket
-      |> assign(:current_password, nil)
+      |> assign(:current_password_username, nil)
+      |> assign(:current_password_password, nil)
       |> assign(:email_form_current_password, nil)
       |> assign(:current_email, user.email)
       |> assign(:email_form, to_form(email_changeset))
@@ -177,7 +178,7 @@ defmodule UasWeb.UserSettingsLive do
       |> Map.put(:action, :validate)
       |> to_form()
 
-    {:noreply, assign(socket, password_form: password_form, current_password: password)}
+    {:noreply, assign(socket, password_form: password_form, current_password_password: password)}
   end
 
   def handle_event("update_password", params, socket) do
@@ -195,6 +196,36 @@ defmodule UasWeb.UserSettingsLive do
 
       {:error, changeset} ->
         {:noreply, assign(socket, password_form: to_form(changeset))}
+    end
+  end
+
+  def handle_event("validate_username", params, socket) do
+    %{"current_password" => password, "user" => user_params} = params
+
+    username_form =
+      socket.assigns.current_user
+      |> Accounts.change_username(user_params)
+      |> Map.put(:action, :validate)
+      |> to_form()
+
+    {:noreply, assign(socket, username_form: username_form, current_password_username: password)}
+  end
+
+  def handle_event("update_username", params, socket) do
+    %{"current_password" => password, "user" => user_params} = params
+    user = socket.assigns.current_user
+
+    case Accounts.update_username(user, password, user_params) do
+      {:ok, user} ->
+        username_form =
+          user
+          |> Accounts.change_username(user_params)
+          |> to_form()
+
+        {:noreply, assign(socket, trigger_submit: true, username_form: username_form)}
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, username_form: to_form(changeset))}
     end
   end
 

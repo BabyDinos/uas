@@ -360,7 +360,16 @@ defmodule Uas.Accounts do
   end
 
   def change_username(user, attrs \\ %{}) do
-    User.username_changeset(user, attrs, validate_email: true)
+    User.username_changeset(user, attrs, validate_username: true)
+  end
+
+  def update_username(user, password, attrs) do
+    changeset =
+      user
+      |> User.username_changeset(attrs)
+      |> User.validate_current_password(password)
+      IO.inspect(changeset)
+      Ecto.Repo.update(changeset)
   end
 
 end
