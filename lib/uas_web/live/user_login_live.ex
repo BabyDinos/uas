@@ -3,6 +3,15 @@ defmodule UasWeb.UserLoginLive do
 
   def render(assigns) do
     ~H"""
+    <style>
+    input[type = "loginmethod"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: .5rem;
+      margin-bottom: 5px;
+    }
+    </style>
     <div class="mx-auto max-w-sm">
       <.header class="text-center">
         Sign in to account
@@ -16,7 +25,7 @@ defmodule UasWeb.UserLoginLive do
       </.header>
 
       <.simple_form for={@form} id="login_form" action={~p"/users/log_in"} phx-update="ignore">
-        <.input field={@form[:email]} type="email" label="Email" required />
+        <.input field={@form[:loginmethod]} type="loginmethod" label="Username or Email" required />
         <.input field={@form[:password]} type="password" label="Password" required />
 
         <:actions>
@@ -36,8 +45,8 @@ defmodule UasWeb.UserLoginLive do
   end
 
   def mount(_params, _session, socket) do
-    email = live_flash(socket.assigns.flash, :email)
-    form = to_form(%{"email" => email}, as: "user")
+    loginmethod = live_flash(socket.assigns.flash, :loginmethod)
+    form = to_form(%{"loginmethod" => loginmethod}, as: "user")
     {:ok, assign(socket, form: form), temporary_assigns: [form: form]}
   end
 end

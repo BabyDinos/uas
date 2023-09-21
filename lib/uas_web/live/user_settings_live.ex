@@ -10,7 +10,7 @@ defmodule UasWeb.UserSettingsLive do
       width: 100%;
       padding: 10px;
       border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: .5rem;
       margin-bottom: 5px;
     }
     </style>
