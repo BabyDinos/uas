@@ -375,6 +375,13 @@ defmodule Uas.Accounts do
     when is_binary(username) and is_binary(password) do
       user = Repo.get_by(User, username: username)
     if User.valid_password?(user, password), do: user
-end
+  end
 
+  def get_users(search_query)
+    when is_binary(search_query) do
+      query = from u in User,
+        where: ilike(u.username, ^("%" <> String.downcase(search_query) <> "%"))
+      result = Repo.all(query)
+      result
+  end
 end

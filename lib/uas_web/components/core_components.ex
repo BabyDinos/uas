@@ -268,7 +268,7 @@ defmodule UasWeb.CoreComponents do
 
   attr :type, :string,
     default: "text",
-    values: ~w(checkbox color date datetime-local email file hidden month number password
+    values: ~w(checkbox color date datetime-local loginmethod email file hidden month number password
                range radio search select tel text textarea time url username week)
 
   attr :field, Phoenix.HTML.FormField,

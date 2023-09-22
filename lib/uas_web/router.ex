@@ -23,12 +23,6 @@ defmodule UasWeb.Router do
     get "/", PageController, :home
   end
 
-  scope "/profiles", UasWeb do
-    pipe_through :browser
-
-    get "/:username", ProfileController, :profile
-  end
-
   # Other scopes may use custom stacks.
   # scope "/api", UasWeb do
   #   pipe_through :api
@@ -74,6 +68,7 @@ defmodule UasWeb.Router do
       on_mount: [{UasWeb.UserAuth, :ensure_authenticated}] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+      live "/profiles", ProfileLive, :search
     end
   end
 
@@ -88,4 +83,11 @@ defmodule UasWeb.Router do
       live "/users/confirm", UserConfirmationInstructionsLive, :new
     end
   end
+
+  scope "/profiles", UasWeb do
+    pipe_through :browser
+
+    get "/:username", ProfileController, :profile
+  end
+
 end
