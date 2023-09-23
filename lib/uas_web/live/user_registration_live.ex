@@ -19,7 +19,7 @@ defmodule UasWeb.UserRegistrationLive do
     form {
       display: flex;
       flex-direction: column;
-      width: 300px;
+      width: 400px;
       height: auto;
       margin: 0 auto;
       padding: 10px;

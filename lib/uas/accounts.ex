@@ -377,6 +377,10 @@ defmodule Uas.Accounts do
     if User.valid_password?(user, password), do: user
   end
 
+  def get_users("") do
+    []
+  end
+
   def get_users(search_query)
     when is_binary(search_query) do
       query = from u in User,

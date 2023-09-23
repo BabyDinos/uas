@@ -1,6 +1,5 @@
 defmodule UasWeb.ProfileLive do
   use UasWeb, :live_view
-
   alias Uas.Accounts
 
   def render(assigns) do
@@ -33,15 +32,33 @@ defmodule UasWeb.ProfileLive do
           width: 100%;
           margin-bottom: 10px; /* Adjust the margin as needed for spacing between containers */
         }
-
-        p {
+        a {
           padding-left: 30px;
+          color: blue;
         }
         #search_form {
           width: 100%; /* Set the width to fill the available space */
           padding: 10px; /* Add padding */
           font-size: 16px; /* Set font size */
         }
+        .profile-box {
+          display: inline-block;
+          border: 1px solid #ccc;
+          padding: 0;
+          margin-bottom: 0;
+          width: 100%;
+        }
+        .profile-link {
+          display: block;
+          width: 100%;
+          height: 100%;
+          text-decoration: none; /* Remove underline from link */
+          color: inherit; /* Inherit text color from parent */
+        }
+        .profile-box:hover {
+          background-color: #f0f0f0; /* Change the background color on hover to create shading */
+        }
+
         </style>
     </head>
 
@@ -59,11 +76,15 @@ defmodule UasWeb.ProfileLive do
         </div>
         <div class = "result-container">
           <%= for profile <- @search_result do %>
-            <div>
-              <!-- Render profile data here -->
-              <p>Name: <%= profile.username %></p>
-              <p>Email: <%= profile.email %></p>
+            <div class="profile-box">
+              <.link
+              href = {~p"/profiles/#{profile.username}"}
+              class = "profile-link"
+              >
+              <%= profile.username %>
+              <a> Email: <%= profile.email %> </a>
               <!-- Add more profile fields as needed -->
+              </.link>
             </div>
           <% end %>
         </div>
@@ -92,4 +113,5 @@ defmodule UasWeb.ProfileLive do
 
     {:noreply, assign(socket, search_result: search_result)}
   end
+
 end
