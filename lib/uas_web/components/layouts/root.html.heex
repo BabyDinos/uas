@@ -13,46 +13,73 @@
       .nav-left {
         justify-content: space-between;
         display: flex; 
+        align-items: center;
       }
+        .Home {
+          align-items: center;
+          width: 30px;
+          height: 20px;
+        }
+          .Home img {
+            width: 100%;
+            height: 100%;
+            object-fit:contain;
+          }
+          .Home:hover img {
+            transform: scale(1.1);
+          }
+        .Search {
+          color: white;   
+          text-decoration: none;  
+          padding: 5px 10px;  
+          font-weight: 500;
+          display: inline-flex;
+          justify-content: flex-start;
+        }
+          .Search:hover {
+            transform: scale(1.1);
+          }
+          .SearchIcon {
+            margin-left: 10px;
+          }
+          .SearchText {
+            margin-left: 20px;
+          }
       .nav-right {
         justify-content: flex-end;
       }
-      .Search {
-        color: white;   
-        text-decoration: none;  
-        padding: 5px 10px;  
-        font-weight: 500;
-        display: inline-flex;
-        justify-content: flex-start;
-      }
-      .SearchIcon {
-        margin-left: 10px;
-      }
-      .SearchText {
-        margin-left: 20px;
-      }
-      .Username {
-        color: white;          
-        text-decoration: none;  
-        padding: 5px 10px;  
-        font-weight: 500;
-        margin-right: 20px;
-      }
-
-      .Register, .Settings {
-        color: black;          
-        background-color: lightgrey; 
-        text-decoration: none;  
-        padding: 5px 10px;  
-        font-weight: 500;
-        margin-right: 20px;
-      }
-      .Login, .Logout{
-        color: black;
-        background-color: lightgreen;
-        padding: 5px 10px;  
-        font-weight: 500;
-      }
+        .Username {
+          color: white;          
+          text-decoration: none;  
+          padding: 5px 10px;  
+          font-weight: 500;
+          margin-right: 20px;
+        }
+          .Username:hover {
+            font-weight: bold;
+          }
+        .Register, .Settings {
+          color: black;          
+          background-color: lightgrey; 
+          text-decoration: none;  
+          padding: 5px 10px;  
+          font-weight: 500;
+          margin-right: 20px;
+          transition: box-shadow 0.3s;
+        }
+          .Register:hover, .Settings:hover {
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+          }
+        .Login, .Logout{
+          color: black;
+          background-color: lightgreen;
+          padding: 5px 10px;  
+          font-weight: 500;
+          transition: box-shadow 0.3s;
+        }
+          .Login:hover, .Logout:hover {
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+          }
 
     </style>
 
@@ -69,6 +96,14 @@
   <body>
     <div class = "header">
       <div class = "nav-left">
+        <a>
+          <.link
+          href = {~p"/"}
+          class = "Home"
+          >
+          <img src = "/images/snorlax.jpg" alt = "Home Icon">
+          </.link>
+        </a>
         <a>
           <.link
           href = {~p"/profiles"}
