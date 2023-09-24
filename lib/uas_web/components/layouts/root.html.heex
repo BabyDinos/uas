@@ -7,10 +7,30 @@
         background-color: #333; 
         padding: 10px;
         display: flex; 
-        justify-content: flex-end;
         align-items: center;
+        justify-content: space-between;
       }
-
+      .nav-left {
+        justify-content: space-between;
+        display: flex; 
+      }
+      .nav-right {
+        justify-content: flex-end;
+      }
+      .Search {
+        color: white;   
+        text-decoration: none;  
+        padding: 5px 10px;  
+        font-weight: 500;
+        display: inline-flex;
+        justify-content: flex-start;
+      }
+      .SearchIcon {
+        margin-left: 10px;
+      }
+      .SearchText {
+        margin-left: 20px;
+      }
       .Username {
         color: white;          
         text-decoration: none;  
@@ -48,33 +68,58 @@
   </head>
   <body>
     <div class = "header">
+      <div class = "nav-left">
+        <a>
+          <.link
+          href = {~p"/profiles"}
+          class = "Search"
+          >
+          <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class = "SearchIcon"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <span class = "SearchText">Search</span>
+          </.link>
+        </a>
+      </div>
+      <div class = "nav-right">
         <%= if @current_user do %>
-          <a>
-            <.link
-            href = {~p"/profiles/#{@current_user.username}"}
-            class = "Username"
-            >
-            <%= @current_user.username %>
-            </.link>
-          </a>
-            
-          <a>
-            <.link
-              href={~p"/users/settings"}
-              class = "Settings"
-            >
-              Settings
-            </.link>
-          </a>
-          <a>
-            <.link
-              href={~p"/users/log_out"}
-              class = "Logout"
-              method="delete"
-            >
-              Log out
-            </.link>
-          </a>
+        <a>
+          <.link
+          href = {~p"/profiles/#{@current_user.username}"}
+          class = "Username"
+          >
+          <%= @current_user.username %>
+          </.link>
+        </a>
+        <a>
+          <.link
+            href={~p"/users/settings"}
+            class = "Settings"
+          >
+            Settings
+          </.link>
+        </a>
+        <a>
+          <.link
+            href={~p"/users/log_out"}
+            class = "Logout"
+            method="delete"
+          >
+            Log out
+          </.link>
+        </a>
         <% else %>
           <a>
             <.link
@@ -93,7 +138,10 @@
             </.link>
           </a>
         <% end %>
-    </div>
+          </div>
+      </div>
+
+      
 
     <%= @inner_content %>
   </body>

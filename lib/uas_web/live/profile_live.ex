@@ -32,7 +32,7 @@ defmodule UasWeb.ProfileLive do
           width: 100%;
           margin-bottom: 10px; /* Adjust the margin as needed for spacing between containers */
         }
-        a {
+        p {
           padding-left: 30px;
           color: blue;
         }
@@ -73,18 +73,21 @@ defmodule UasWeb.ProfileLive do
           >
             <.input field={@search_form[:search_query]} type="search" label="Search" placeholder = "Search..." required />
           </.simple_form>
+
         </div>
         <div class = "result-container">
           <%= for profile <- @search_result do %>
             <div class="profile-box">
+              <p>
               <.link
               href = {~p"/profiles/#{profile.username}"}
               class = "profile-link"
               >
               <%= profile.username %>
-              <a> Email: <%= profile.email %> </a>
+              <p> Email: <%= profile.email %> </p>
               <!-- Add more profile fields as needed -->
               </.link>
+              </p>
             </div>
           <% end %>
         </div>
