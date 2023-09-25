@@ -91,7 +91,7 @@ defmodule UasWeb.UserRegistrationLive do
 
   def handle_event("save", %{"user" => user_params}, socket) do
     case Accounts.register_user(user_params) do
-      {:ok, user} ->
+      {:ok, {:ok, user, users_profiles}} ->
         {:ok, _} =
           Accounts.deliver_user_confirmation_instructions(
             user,
@@ -101,7 +101,7 @@ defmodule UasWeb.UserRegistrationLive do
         changeset = Accounts.change_user_registration(user)
         {:noreply, socket |> assign(trigger_submit: true) |> assign_form(changeset)}
 
-      {:error, %Ecto.Changeset{} = changeset} ->
+      {:error, %Ecto.Changeset{} = changeset, _errors, _data} ->
         {:noreply, socket |> assign(check_errors: true) |> assign_form(changeset)}
     end
   end

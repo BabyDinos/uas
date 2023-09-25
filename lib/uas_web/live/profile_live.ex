@@ -9,112 +9,49 @@ defmodule UasWeb.ProfileLive do
     <html lang="en">
     <head>
         <style>
-        h1 {
-          text-align: center;
-          padding: 0px;
-          font: larger;
-          font-size: 36px;
+        body {
+            /* background-image: url("/images/snorlax.jpg"); */
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
         }
-        .centered-container {
-          display: flex;
-          flex-direction: column;
-          justify-content: center; /* Center horizontally */
-          align-items: center; /* Center vertically */
-          min-height: 10vh; /* Set height to viewport height for vertical centering */
-          margin: 0;
+        h1.page-title {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            color: black;
+            font-size: xx-large;
+            text-align: center;
         }
-
-        .search-container, .result-container {
-          display: flex;
-          flex-direction: column; /* Stack containers vertically */
-          align-items: flex-start; /* Center content horizontally */
-          max-width: 1000px;
-          width: 100%;
-          margin-bottom: 10px; /* Adjust the margin as needed for spacing between containers */
-        }
-        p {
-          padding-left: 30px;
-          color: blue;
-        }
-        #search_form {
-          width: 100%; /* Set the width to fill the available space */
-          padding: 10px; /* Add padding */
-          font-size: 16px; /* Set font size */
-        }
-        .profile-box {
-          display: inline-block;
-          border: 1px solid #ccc;
-          padding: 0;
-          margin-bottom: 0;
-          width: 100%;
-        }
-        .profile-link {
-          display: block;
-          width: 100%;
-          height: 100%;
-          text-decoration: none; /* Remove underline from link */
-          color: inherit; /* Inherit text color from parent */
-        }
-        .profile-box:hover {
-          background-color: #f0f0f0; /* Change the background color on hover to create shading */
-        }
-
         </style>
     </head>
 
     <body>
-    <h1>Profile Searcher</h1>
-      <div class="centered-container">
-        <div class="search-container">
-          <.simple_form
-            for={@search_form}
-            id="search_form"
-            phx-change="validate_search"
-          >
-            <.input field={@search_form[:search_query]} type="search" label="Search" placeholder = "Search..." required />
-          </.simple_form>
-
-        </div>
-        <div class = "result-container">
-          <%= for profile <- @search_result do %>
-            <div class="profile-box">
-              <p>
-              <.link
-              href = {~p"/profiles/#{profile.username}"}
-              class = "profile-link"
-              >
-              <%= profile.username %>
-              <p> Email: <%= profile.email %> </p>
-              <!-- Add more profile fields as needed -->
-              </.link>
-              </p>
-            </div>
-          <% end %>
-        </div>
-      </div>
-
+      <%= if @username_in_database do %>
+        <h1 class="page-title"><%= @username %> </h1>
+      <% else %>
+        <h1 class="page-title">ERROR: <%= @username %> not found!</h1>
+      <% end %>
     </body>
 
     </html>
-    """
-  end
 
-  def mount(_params, _session, socket) do
+    """
+
+end
+
+  def mount(%{"username" => username}, _session, socket) do
+    user = Accounts.get_user_by_username(username)
+    user_profile = Accounts.get_user_profile_by_user_id(user.id)
+    bio = user_profile.bio
+    username = user.username
+
     socket =
       socket
-      |> assign(search_query: nil)
-      |> assign(search_form: to_form%{})
-      |> assign(search_result: [])
+      |> assign(username: username)
+      |> assign(:username_in_database, user != nil)
+      |> assign(:bio, bio)
     {:ok, socket}
-  end
-
-  def handle_event("validate_search", params, socket) do
-    IO.inspect(params, label: "Params")
-    %{"search_query" => search_query} = params
-
-    search_result = Accounts.get_users(search_query)
-
-    {:noreply, assign(socket, search_result: search_result)}
   end
 
 end

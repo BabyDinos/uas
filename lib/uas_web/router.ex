@@ -58,7 +58,7 @@ defmodule UasWeb.Router do
       live "/users/reset_password/:token", UserResetPasswordLive, :edit
     end
 
-    post "/users/log_in", UserSessionController, :create
+    post "/users/log_in", UserSessionController, :login
   end
 
   scope "/", UasWeb do
@@ -68,7 +68,9 @@ defmodule UasWeb.Router do
       on_mount: [{UasWeb.UserAuth, :ensure_authenticated}] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
-      live "/profiles", ProfileLive, :search
+      live "/profiles", ProfileSearchLive, :search
+      live "/profiles/:username", ProfileLive, :profile
+      live "/profiles/:username/edit", ProfileLive, :edit
     end
   end
 
@@ -82,12 +84,6 @@ defmodule UasWeb.Router do
       live "/users/confirm/:token", UserConfirmationLive, :edit
       live "/users/confirm", UserConfirmationInstructionsLive, :new
     end
-  end
-
-  scope "/profiles", UasWeb do
-    pipe_through :browser
-
-    get "/:username", ProfileController, :profile
   end
 
 end

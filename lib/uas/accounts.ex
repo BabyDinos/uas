@@ -6,7 +6,7 @@ defmodule Uas.Accounts do
   import Ecto.Query, warn: false
   alias Uas.Repo
 
-  alias Uas.Accounts.{User, UserToken, UserNotifier}
+  alias Uas.Accounts.{User, UserToken, UserNotifier, UserProfiles}
 
   ## Database getters
 
@@ -75,9 +75,22 @@ defmodule Uas.Accounts do
 
   """
   def register_user(attrs) do
-    %User{}
-    |> User.registration_changeset(attrs)
-    |> Repo.insert()
+    Repo.transaction(fn ->
+      # Create a new user and insert it into the database
+      {:ok, user} = %User{}
+                     |> User.registration_changeset(attrs)
+                     |> Repo.insert()
+
+      # Get the generated user_id
+      user_id = user.id
+
+      # Create a new user profile and associate it with the user
+      {:ok, user_profile} = %UserProfiles{}
+                            |> UserProfiles.changeset(%{user_id: user_id})
+                            |> Repo.insert()
+
+      {:ok, user, user_profile}
+    end)
   end
 
   @doc """
@@ -351,9 +364,17 @@ defmodule Uas.Accounts do
     end
   end
 
-  def username_exists(username) do
+  def get_user_by_username(username) do
     if user = Repo.get_by(User, username: username) do
-      user.username
+      user
+    else
+      nil
+    end
+  end
+
+  def get_user_profile_by_user_id(user_id) do
+    if user_profile = Repo.get_by(UserProfiles, user_id: user_id) do
+      user_profile
     else
       nil
     end
