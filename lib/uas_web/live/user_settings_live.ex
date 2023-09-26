@@ -13,6 +13,11 @@ defmodule UasWeb.UserSettingsLive do
       border-radius: .5rem;
       margin-bottom: 5px;
     }
+    .Edit-button {
+      border-radius: .5rem;
+      margin-top: 30px;
+      margin-bottom: 0px;
+    }
     </style>
     <.header class="text-center">
       Account Settings
@@ -20,6 +25,17 @@ defmodule UasWeb.UserSettingsLive do
     </.header>
 
     <div class="space-y-12 divide-y">
+      <div>
+        <.button class = "Edit-button">
+          <.link
+              href={~p"/profiles/#{@current_user.username}?_action=edit"}
+              class = "Edit-link"
+              style="display: block; width: 100%; height: 100%;"
+          >
+              Edit Profile Page
+          </.link>
+        </.button>
+      </div>
       <div>
         <.simple_form
           for={@username_form}

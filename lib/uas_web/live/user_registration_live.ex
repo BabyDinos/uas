@@ -91,7 +91,7 @@ defmodule UasWeb.UserRegistrationLive do
 
   def handle_event("save", %{"user" => user_params}, socket) do
     case Accounts.register_user(user_params) do
-      {:ok, {:ok, user, users_profiles}} ->
+      {:ok, {:ok, user, _users_profiles}} ->
         {:ok, _} =
           Accounts.deliver_user_confirmation_instructions(
             user,

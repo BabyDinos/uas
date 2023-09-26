@@ -409,4 +409,17 @@ defmodule Uas.Accounts do
       result = Repo.all(query)
       result
   end
+
+  def update_bio(user_profile, attrs) do
+    changeset =
+      user_profile
+      |> UserProfiles.bio_changeset(attrs)
+      |> UserProfiles.validate_bio()
+      Repo.update(changeset)
+  end
+
+  def change_bio(user_profile, attrs \\ %{}) do
+    UserProfiles.bio_changeset(user_profile, attrs)
+  end
+
 end

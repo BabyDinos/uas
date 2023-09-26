@@ -70,7 +70,6 @@ defmodule UasWeb.Router do
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
       live "/profiles", ProfileSearchLive, :search
       live "/profiles/:username", ProfileLive, :profile
-      live "/profiles/:username/edit", ProfileLive, :edit
     end
   end
 
